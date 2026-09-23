@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080910">
+<title>IMPOSTER — One Secret. One Liar.</title>
+
+<style>
+:root{
+  --bg:#080910;
+  --panel:#11131e;
+  --panel2:#171a28;
+  --panel3:#0d0f18;
+  --text:#f5f7ff;
+  --muted:#9da4bc;
+  --line:#292e43;
+  --accent:#8b5cf6;
+  --accent2:#22d3ee;
+  --danger:#fb4b6b;
+  --good:#39d98a;
+  --gold:#f4c95d;
+  --shadow:0 25px 70px rgba(0,0,0,.4);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(139,92,246,.12),transparent 35%),
+    radial-gradient(circle at 90% 20%,rgba(34,211,238,.07),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+}
+
+.shell{
+  width:min(1000px,100%);
+  padding:18px 15px 50px;
+}
+
+.topbar{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.brand{
+  font-size:14px;
+  font-weight:1000;
+  letter-spacing:.18em;
+}
+
+.badge{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  color:var(--muted);
+  border:1px solid var(--line);
+  background:rgba(12,14,23,.8);
+  border-radius:999px;
+  padding:7px 10px;
+}
+
+.screen{
+  display:none;
+  animation:screenIn .25s ease;
+}
+
+.screen.active{
+  display:block;
+}
+
+@keyframes screenIn{
+  from{
+    opacity:0;
+    transform:translateY(9px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* GENERAL */
+
+.card{
+  background:
+    linear-gradient(145deg,rgba(23,26,40,.96),rgba(12,14,23,.97));
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.hero{
+  text-align:center;
+  padding:55px 5px 30px;
+}
+
+.logo{
+  font-size:clamp(54px,14vw,115px);
+  line-height:.82;
+  font-weight:1000;
+  letter-spacing:-.09em;
+  text-shadow:
+    0 0 25px rgba(139,92,246,.25),
+    0 0 70px rgba(139,92,246,.15);
+}
+
+.tag{
+  color:var(--muted);
+  font-size:18px;
+  margin:20px 0 30px;
+}
+
+h1{
+  margin:7px 0 10px;
+  font-size:clamp(30px,7vw,48px);
+  line-height:1;
+  letter-spacing:-.04em;
+}
+
+h2{
+  margin:12px 0;
+}
+
+.sub{
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.small{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.45;
+}
+
+.step{
+  color:#7f88a6;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.15em;
+}
+
+.section-title{
+  color:#7f88a6;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.13em;
+  margin:20px 0 10px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:20px 0;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:16px;
+  padding:14px 17px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--accent),#5949d8);
+  box-shadow:0 10px 28px rgba(94,73,216,.22);
+  transition:.15s ease;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+
+.btn:active{
+  transform:translateY(1px);
+}
+
+.btn.secondary{
+  background:#181b28;
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+
+.btn.danger{
+  background:linear-gradient(135deg,#f34d6c,#a52550);
+}
+
+.btn.good{
+  background:linear-gradient(135deg,#27ca80,#149873);
+}
+
+.btn.big{
+  width:100%;
+  padding:17px;
+  font-size:16px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.actions .btn{
+  flex:1;
+  min-width:150px;
+}
+
+/* HOME */
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.stat{
+  padding:15px;
+  background:#0d0f18;
+  border:1px solid var(--line);
+  border-radius:17px;
+}
+
+.stat b{
+  display:block;
+  font-size:25px;
+}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  margin-top:3px;
+}
+
+/* MODES */
+
+.mode-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.mode{
+  position:relative;
+  min-height:155px;
+  padding:18px;
+  text-align:left;
+  color:var(--text);
+  background:
+    linear-gradient(145deg,#141724,#0e1019);
+  border:1px solid var(--line);
+  border-radius:21px;
+  transition:.15s ease;
+}
+
+.mode:hover{
+  transform:translateY(-2px);
+  border-color:#5d4fa7;
+}
+
+.mode h3{
+  margin:12px 0 7px;
+  font-size:20px;
+}
+
+.mode p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+}
+
+.pill{
+  display:inline-block;
+  color:#cfc5ff;
+  background:#201b37;
+  border:1px solid #3b3260;
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+
+/* SETUP */
+
+.field{
+  margin:0 0 16px;
+}
+
+label{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+input[type="text"],
+input[type="number"]{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  outline:none;
+  background:#0a0c14;
+  color:var(--text);
+}
+
+input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(139,92,246,.08);
+}
+
+.player-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.player-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.player-number{
+  width:25px;
+  color:#626a82;
+  font-size:11px;
+  text-align:center;
+}
+
+.switches{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.toggle{
+  border:1px solid var(--line);
+  background:#10121b;
+  color:var(--text);
+  border-radius:15px;
+  padding:13px;
+  text-align:left;
+}
+
+.toggle.on{
+  border-color:#6a54c3;
+  background:#1d1831;
+}
+
+.toggle b{
+  display:block;
+  font-size:12px;
+}
+
+.toggle span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
+  line-height:1.35;
+}
+
+.notice{
+  padding:14px;
+  border:1px solid #3b3657;
+  background:#17152a;
+  border-radius:16px;
+  color:#d6d0e8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* REVEAL */
+
+.reveal{
+  min-height:450px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.secret{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.13em;
+}
+
+.role{
+  font-size:clamp(48px,13vw,92px);
+  font-weight:1000;
+  letter-spacing:-.06em;
+  line-height:1;
+  margin:20px 0;
+}
+
+.role.imposter{
+  color:var(--danger);
+  text-shadow:0 0 40px rgba(251,75,107,.28);
+}
+
+.role.crew{
+  color:var(--good);
+  text-shadow:0 0 40px rgba(57,217,138,.22);
+}
+
+.role.gold{
+  color:var(--gold);
+}
+
+.subject{
+  font-size:clamp(28px,7vw,55px);
+  font-weight:950;
+  letter-spacing:-.04em;
+}
+
+/* CLUES */
+
+.progress{
+  height:7px;
+  background:#202332;
+  border-radius:99px;
+  overflow:hidden;
+  margin:17px 0;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:.25s;
+}
+
+.clue-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.clue-card{
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:#10121b;
+}
+
+.clue-name{
+  font-weight:900;
+}
+
+.clue-text{
+  margin-top:8px;
+  color:#dce0ed;
+  line-height:1.45;
+  word-break:break-word;
+}
+
+/* CHOICES */
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.choice{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  color:var(--text);
+  background:#10121b;
+  font-weight:850;
+  text-align:left;
+}
+
+.choice:hover{
+  border-color:#6654bb;
+  background:#19162b;
+}
+
+.choice.selected{
+  border-color:var(--accent);
+  background:#201936;
+}
+
+/* VOTING */
+
+.vote-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.vote-option{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:15px;
+  background:#10121b;
+  color:var(--text);
+  text-align:left;
+  font-weight:850;
+}
+
+.vote-option:hover{
+  border-color:#6753ba;
+}
+
+.vote-option.selected{
+  border-color:var(--accent);
+  background:#211936;
+  box-shadow:0 0 0 2px rgba(139,92,246,.08);
+}
+
+.vote-count{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#10121b;
+  margin-bottom:8px;
+}
+
+.vote-count span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* RESULT */
+
+.result-box{
+  text-align:center;
+}
+
+.footer{
+  text-align:center;
+  color:#5e657a;
+  font-size:10px;
+  margin-top:28px;
+}
+
+/* MOBILE */
+
+@media(max-width:680px){
+
+  .shell{
+    padding:12px 11px 40px;
+  }
+
+  .hero{
+    padding-top:55px;
+  }
+
+  .mode-grid,
+  .player-list,
+  .clue-grid,
+  .choice-grid{
+    grid-template-columns:1fr;
+  }
+
+  .switches{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .card{
+    padding:16px;
+    border-radius:20px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .actions .btn{
+    width:100%;
+  }
+
+  .stat-grid{
+    gap:7px;
+  }
+
+  .stat{
+    padding:12px 9px;
+  }
+}
+
+@media(max-width:420px){
+
+  .switches{
+    grid-template-columns:1fr;
+  }
+
+  .logo{
+    font-size:55px;
+  }
+
+  .tag{
+    font-size:15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<main class="shell">
+
+<div class="topbar">
+  <div class="brand">IMPOSTER</div>
+  <div id="topBadge" class="badge">READY</div>
+</div>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+
+  <div class="hero">
+    <div class="logo">IMPOSTER</div>
+
+    <div class="tag">
+      One secret. One liar.<br>
+      Can your clues survive?
+    </div>
+
+    <button class="btn big" onclick="showScreen('modes')">
+      PLAY NOW
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="stat-grid">
+      <div class="stat">
+        <b id="gamesStat">0</b>
+        <span>GAMES</span>
+      </div>
+
+      <div class="stat">
+        <b id="crewStat">0</b>
+        <span>CREW WINS</span>
+      </div>
+
+      <div class="stat">
+        <b id="impStat">0</b>
+        <span>IMPOSTER WINS</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn secondary big" onclick="showScreen('how')">
+    HOW TO PLAY
+  </button>
+
+</section>
+
+
+<!-- HOW -->
+<section id="how" class="screen">
+
+<div class="card">
+
+<div class="step">RULES</div>
+
+<h1>How to play</h1>
+
+<p class="sub">
+Pass the phone around. Everyone secretly receives a role.
+Crew members know the subject. The Imposter doesn't.
+</p>
+
+<hr>
+
+<p>
+<b>1. Reveal</b><br>
+<span class="small">
+Each player privately checks their role.
+</span>
+</p>
+
+<p>
+<b>2. Clues</b><br>
+<span class="small">
+Every living player gives one clue without saying the secret subject.
+</span>
+</p>
+
+<p>
+<b>3. Discussion</b><br>
+<span class="small">
+Compare everyone's clues and decide who seems suspicious.
+</span>
+</p>
+
+<p>
+<b>4. Secret vote</b><br>
+<span class="small">
+Pass the phone again. Everyone votes privately. Nobody can vote for themselves.
+</span>
+</p>
+
+<p>
+<b>5. Final guess</b><br>
+<span class="small">
+If an Imposter is eliminated, they get one chance to guess the subject.
+</span>
+</p>
+
+<p>
+<b>6. Win conditions</b><br>
+<span class="small">
+Crew wins when all Imposters are eliminated. Imposters win if they reach parity with Crew or correctly guess the subject.
+</span>
+</p>
+
+<button class="btn big" onclick="showScreen('home')">
+BACK
+</button>
+
+</div>
+
+</section>
+
+
+<!-- MODES -->
+<section id="modes" class="screen">
+
+<div class="card">
+
+<div class="step">GAME MODES</div>
+
+<h1>Choose your mode</h1>
+
+<p class="sub">
+Different rules. Same question: who is lying?
+</p>
+
+</div>
+
+<div id="modeGrid" class="mode-grid"></div>
+
+<button class="btn secondary big" style="margin-top:12px"
+onclick="showScreen('home')">
+BACK
+</button>
+
+</section>
+
+
+<!-- SETUP -->
+<section id="setup" class="screen">
+
+<div class="card">
+
+<div id="setupModeName" class="step">SETUP</div>
+
+<h1>Who's playing?</h1>
+
+<p class="sub">
+Choose 3–12 players.
+</p>
+
+<div class="field">
+
+<label>NUMBER OF PLAYERS</label>
+
+<input
+id="playerCount"
+type="number"
+min="3"
+max="12"
+value="6"
+oninput="renderPlayers()"
+>
+
+</div>
+
+<div id="playerList" class="player-list"></div>
+
+<div id="customRules" style="display:none">
+
+<div class="section-title">
+CUSTOM RULES
+</div>
+
+<div class="field">
+
+<label>NUMBER OF IMPOSTERS</label>
+
+<input
+id="customImposters"
+type="number"
+min="1"
+max="3"
+value="1"
+>
+
+</div>
+
+<div class="switches">
+
+<button
+id="relatedToggle"
+class="toggle"
+onclick="toggleCustom('related')">
+
+<b>RELATED</b>
+<span>
+Imposter receives a related subject.
+</span>
+
+</button>
+
+<button
+id="chaosToggle"
+class="toggle"
+onclick="toggleCustom('chaos')">
+
+<b>CHAOS</b>
+<span>
+Special clue events.
+</span>
+
+</button>
+
+<button
+id="rolesToggle"
+class="toggle"
+onclick="toggleCustom('roles')">
+
+<b>SECRET ROLES</b>
+<span>
+Crew powers.
+</span>
+
+</button>
+
+</div>
+
+</div>
+
+<div
+id="setupWarning"
+class="notice"
+style="display:none;margin-top:14px">
+</div>
+
+<button
+class="btn big"
+style="margin-top:16px"
+onclick="startGame()">
+START GAME
+</button>
+
+<button
+class="btn secondary big"
+style="margin-top:9px"
+onclick="showScreen('modes')">
+BACK
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PASS -->
+<section id="pass" class="screen">
+
+<div class="card reveal">
+
+<div class="secret">
+PASS THE PHONE TO
+</div>
+
+<h1 id="passPlayer"></h1>
+
+<p class="sub">
+Make sure nobody else can see the screen.
+</p>
+
+<button
+class="btn big"
+onclick="revealRole()">
+REVEAL MY ROLE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ROLE -->
+<section id="role" class="screen">
+
+<div class="card reveal">
+
+<div
+id="roleSecret"
+class="secret">
+YOUR SECRET ROLE
+</div>
+
+<div
+id="roleTitle"
+class="role">
+</div>
+
+<div id="roleInformation"></div>
+
+<div
+id="roleDescription"
+class="notice"
+style="max-width:650px;margin-top:20px">
+</div>
+
+<button
+class="btn big"
+style="margin-top:18px"
+onclick="hideRole()">
+HIDE & PASS
+</button>
+
+</div>
+
+</section>
+
+
+<!-- CLUES -->
+<section id="clues" class="screen">
+
+<div class="card">
+
+<div id="clueStep" class="step">
+CLUE ROUND
+</div>
+
+<h1>Give your clue</h1>
+
+<p
+id="clueInstruction"
+class="sub">
+</p>
+
+<div
+id="chaosBox"
+class="notice"
+style="display:none">
+</div>
+
+<div class="progress">
+<i id="clueProgress"></i>
+</div>
+
+<h2 id="cluePlayer"></h2>
+
+<div class="field">
+
+<input
+id="clueInput"
+type="text"
+maxlength="80"
+placeholder="Type your clue..."
+>
+
+</div>
+
+<button
+class="btn big"
+onclick="submitClue()">
+SUBMIT CLUE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- POWERS -->
+<section id="powers" class="screen">
+
+<div class="card">
+
+<div class="step">SECRET ROLE POWER</div>
+
+<h1 id="powerTitle"></h1>
+
+<p
+id="powerDescription"
+class="sub">
+</p>
+
+<div id="powerContent"></div>
+
+<button
+id="powerContinue"
+class="btn big"
+style="margin-top:16px"
+onclick="finishPower()">
+CONTINUE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- DISCUSSION -->
+<section id="discussion" class="screen">
+
+<div class="card">
+
+<div class="step">DISCUSSION</div>
+
+<h1>Compare the clues</h1>
+
+<p
+id="discussionInfo"
+class="sub">
+</p>
+
+<div
+id="discussionClues"
+class="clue-grid">
+</div>
+
+<button
+class="btn big"
+style="margin-top:16px"
+onclick="startVoting()">
+START SECRET VOTE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- VOTE -->
+<section id="vote" class="screen">
+
+<div class="card">
+
+<div class="step">PRIVATE VOTE</div>
+
+<h1 id="voteTitle">Vote</h1>
+
+<p class="sub">
+Choose one living player. You cannot vote for yourself.
+</p>
+
+<div
+id="voteOptions"
+class="vote-list">
+</div>
+
+<div
+id="tricksterNotice"
+class="notice"
+style="display:none;margin-top:12px">
+</div>
+
+<button
+class="btn big"
+style="margin-top:15px"
+onclick="lockVote()">
+LOCK VOTE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- TALLY -->
+<section id="tally" class="screen">
+
+<div class="card">
+
+<div class="step">VOTES LOCKED</div>
+
+<h1>Vote count</h1>
+
+<div id="tallyContent"></div>
+
+<button
+class="btn big"
+style="margin-top:16px"
+onclick="resolveVote()">
+REVEAL RESULT
+</button>
+
+</div>
+
+</section>
+
+
+<!-- TIE -->
+<section id="tie" class="screen">
+
+<div class="card reveal">
+
+<div class="secret">
+NO ELIMINATION
+</div>
+
+<div class="role gold">
+TIE
+</div>
+
+<p
+id="tieMessage"
+class="sub">
+</p>
+
+<button
+class="btn big"
+onclick="newClueCycle()">
+NEW CLUE CYCLE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ELIMINATION -->
+<section id="elimination" class="screen">
+
+<div class="card reveal">
+
+<div class="secret">
+ELIMINATED
+</div>
+
+<div
+id="eliminatedName"
+class="role">
+</div>
+
+<div
+id="eliminatedRole"
+class="subject">
+</div>
+
+<p
+id="eliminatedMessage"
+class="sub">
+</p>
+
+<button
+id="eliminationContinue"
+class="btn big"
+onclick="continueAfterElimination()">
+CONTINUE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- GUESS -->
+<section id="guess" class="screen">
+
+<div class="card">
+
+<div class="step">
+FINAL CHANCE
+</div>
+
+<h1 id="guessTitle"></h1>
+
+<p class="sub">
+The eliminated Imposter gets one final guess.
+</p>
+
+<div class="field">
+
+<label>
+WHAT WAS THE SECRET SUBJECT?
+</label>
+
+<input
+id="guessInput"
+type="text"
+maxlength="80"
+placeholder="Your final guess..."
+>
+
+</div>
+
+<button
+class="btn danger big"
+onclick="submitFinalGuess()">
+MAKE FINAL GUESS
+</button>
+
+</div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="result" class="screen">
+
+<div class="card reveal">
+
+<div class="secret">
+GAME OVER
+</div>
+
+<div
+id="resultTitle"
+class="role">
+</div>
+
+<p
+id="resultReason"
+class="sub">
+</p>
+
+<div
+id="resultSubject"
+class="notice">
+</div>
+
+<div
+class="actions"
+style="width:100%;margin-top:18px">
+
+<button
+class="btn"
+onclick="newSubjectRound()">
+NEW ROUND
+</button>
+
+<button
+class="btn secondary"
+onclick="copyGameLink()">
+COPY GAME LINK
+</button>
+
+</div>
+
+<button
+class="btn secondary big"
+style="margin-top:10px"
+onclick="showScreen('home')">
+HOME
+</button>
+
+</div>
+
+</section>
+
+
+<div class="footer">
+IMPOSTER • Single-file party game • Works offline
+</div>
+
+</main>
+</div>
+
+
+<script>
+
+/* =========================================================
+   IMPOSTER
+   Single-file social deduction party game
+   ========================================================= */
+
+
+/* =========================================================
+   SUBJECT DATABASE
+   ========================================================= */
+
+const SUBJECTS = {
+
+Animals:[
+"Penguin","Dolphin","Elephant","Giraffe","Shark",
+"Kangaroo","Tiger","Octopus","Panda","Crocodile",
+"Koala","Wolf","Eagle","Frog","Butterfly",
+"Lion","Zebra","Turtle","Parrot","Rabbit",
+"Fox","Owl","Whale","Monkey","Snake",
+"Horse","Bee","Polar Bear","Camel","Peacock"
+],
+
+Food:[
+"Pizza","Pancakes","Sushi","Burger","Popcorn",
+"Ice Cream","Tacos","Watermelon","Pasta","Chocolate",
+"Noodles","Donut","Cupcake","Sandwich","Cereal",
+"Mango","Apple","French Fries","Dumplings","Cheese",
+"Strawberry","Cookie","Soup","Hot Dog","Pineapple",
+"Waffle","Burrito","Carrot","Coconut","Brownie"
+],
+
+Places:[
+"Beach","Airport","Library","Museum","Zoo",
+"School","Hospital","Mountain","Cinema","Theme Park",
+"Aquarium","Stadium","Park","Restaurant","Hotel",
+"Train Station","Space Station","Castle","Desert","Forest",
+"Cave","Waterfall","Island","Farm","Supermarket",
+"Camping Ground","Science Lab","Art Gallery","Bridge","Lighthouse"
+],
+
+Technology:[
+"Robot","Laptop","Drone","Headphones","Smartphone",
+"Keyboard","Game Console","Camera","Satellite","VR Headset",
+"Smartwatch","Printer","Microphone","Calculator","Tablet",
+"Telescope","3D Printer","Solar Panel","Electric Scooter",
+"Controller","Server","Projector","Radio","AI Assistant",
+"Webcam","USB Drive","Game Engine","Robot Dog","Smart Speaker"
+],
+
+Sports:[
+"Basketball","Tennis","Soccer","Swimming","Skateboarding",
+"Cricket","Golf","Surfing","Cycling","Volleyball",
+"Baseball","Rugby","Boxing","Skiing","Snowboarding",
+"Badminton","Table Tennis","Archery","Gymnastics","Hockey",
+"Rowing","Running","Diving","Karate","Fencing",
+"Climbing","Netball","Motorsport","Wrestling","Athletics"
+],
+
+Nature:[
+"Volcano","Rainbow","Thunderstorm","Desert","Waterfall",
+"Forest","Ocean","Glacier","Cave","Sunset",
+"Aurora","Tornado","River","Island","Coral Reef",
+"Jungle","Meadow","Mountain","Cloud","Earthquake",
+"Fossil","Pond","Canyon","Moon","Star",
+"Comet","Planet","Tree","Flower","Mushroom"
+],
+
+Transport:[
+"Train","Helicopter","Bicycle","Submarine","Bus",
+"Rocket","Ferry","Motorbike","Tram","Hot-Air Balloon",
+"Car","Airplane","Taxi","Kayak","Canoe",
+"Skateboard","Scooter","Monorail","Cable Car","Spaceship",
+"Sailboat","Ambulance","Fire Truck","Bulldozer","Tractor",
+"Cruise Ship","Jet Ski","Glider","Tank","Delivery Van"
+],
+
+Objects:[
+"Backpack","Umbrella","Clock","Mirror","Compass",
+"Suitcase","Candle","Pillow","Magnet","Telescope",
+"Key","Wallet","Glasses","Flashlight","Notebook",
+"Camera","Helmet","Scissors","Ruler","Lantern",
+"Balloon","Lock","Bottle","Chair","Lamp",
+"Map","Binoculars","Dice","Puzzle","Whistle"
+]
+
+};
+
+
+/* =========================================================
+   RELATED SUBJECTS
+   ========================================================= */
+
+const RELATED = {
+
+"Penguin":"Dolphin",
+"Dolphin":"Whale",
+"Elephant":"Giraffe",
+"Giraffe":"Zebra",
+"Shark":"Dolphin",
+"Kangaroo":"Koala",
+"Tiger":"Lion",
+"Octopus":"Turtle",
+"Panda":"Koala",
+"Crocodile":"Turtle",
+
+"Pizza":"Pasta",
+"Pancakes":"Waffle",
+"Sushi":"Dumplings",
+"Burger":"Sandwich",
+"Popcorn":"Cinema",
+"Ice Cream":"Donut",
+"Tacos":"Burrito",
+"Watermelon":"Mango",
+"Pasta":"Noodles",
+"Chocolate":"Cookie",
+
+"Beach":"Island",
+"Airport":"Train Station",
+"Library":"Museum",
+"Museum":"Art Gallery",
+"Zoo":"Aquarium",
+"School":"Science Lab",
+"Hospital":"Ambulance",
+"Mountain":"Glacier",
+"Cinema":"Theme Park",
+"Theme Park":"Stadium",
+
+"Robot":"AI Assistant",
+"Laptop":"Tablet",
+"Drone":"Helicopter",
+"Headphones":"Smartphone",
+"Smartphone":"Smartwatch",
+"Keyboard":"Controller",
+"Game Console":"Controller",
+"Camera":"Webcam",
+"Satellite":"Space Station",
+"VR Headset":"Game Console",
+
+"Basketball":"Volleyball",
+"Tennis":"Badminton",
+"Soccer":"Rugby",
+"Swimming":"Diving",
+"Skateboarding":"Snowboarding",
+"Cricket":"Baseball",
+"Golf":"Archery",
+"Surfing":"Swimming",
+"Cycling":"Running",
+"Volleyball":"Basketball",
+
+"Volcano":"Earthquake",
+"Rainbow":"Aurora",
+"Thunderstorm":"Tornado",
+"Desert":"Canyon",
+"Waterfall":"River",
+"Forest":"Jungle",
+"Glacier":"Mountain",
+"Cave":"Canyon",
+"Sunset":"Aurora",
+
+"Train":"Tram",
+"Helicopter":"Drone",
+"Bicycle":"Scooter",
+"Submarine":"Ferry",
+"Bus":"Tram",
+"Rocket":"Spaceship",
+"Ferry":"Cruise Ship",
+"Motorbike":"Bicycle",
+"Tram":"Train",
+"Hot-Air Balloon":"Glider",
+
+"Backpack":"Suitcase",
+"Umbrella":"Rain",
+"Clock":"Smartwatch",
+"Mirror":"Glasses",
+"Compass":"Map",
+"Suitcase":"Backpack",
+"Candle":"Lantern",
+"Pillow":"Blanket",
+"Magnet":"Compass",
+"Telescope":"Binoculars"
+
+};
+
+
+/* =========================================================
+   CHAOS EVENTS
+   ========================================================= */
+
+const CHAOS_EVENTS = [
+
+{
+name:"ONE WORD",
+description:"Your clue must contain exactly ONE word.",
+check:function(value){
+return value.trim().split(/\s+/).length===1;
+}
+},
+
+{
+name:"REVERSE",
+description:"Make your clue sound like an opposite or contrast.",
+check:function(){
+return true;
+}
+},
+
+{
+name:"SPEED ROUND",
+description:"Think fast. Give the first sensible clue that comes to mind.",
+check:function(){
+return true;
+}
+},
+
+{
+name:"SPECIFIC",
+description:"Be unusually specific without saying the subject.",
+check:function(){
+return true;
+}
+},
+
+{
+name:"NO NAMES",
+description:"Do not use any person's name in your clue.",
+check:function(){
+return true;
+}
+},
+
+{
+name:"ACT IT",
+description:"Your clue should suggest an action or movement.",
+check:function(){
+return true;
+}
+},
+
+{
+name:"THINK DIFFERENT",
+description:"Avoid the most obvious clue you would normally give.",
+check:function(){
+return true;
+}
+}
+
+];
+
+
+/* =========================================================
+   SPECIAL ROLES
+   ========================================================= */
+
+const SPECIAL_ROLES = {
+
+Detective:{
+description:
+"Once per subject round, secretly inspect one living player and learn only CREW or IMPOSTER."
+},
+
+Bodyguard:{
+description:
+"Once per subject round, secretly protect one living player. If they are the unique highest-vote target, they survive."
+},
+
+Trickster:{
+description:
+"Once per subject round, you may make your vote count as two votes."
+},
+
+Copycat:{
+description:
+"Once per subject round, secretly swap the displayed clues of two living players."
+}
+
+};
+
+
+/* =========================================================
+   MODES
+   ========================================================= */
+
+const MODES = {
+
+classic:{
+name:"Classic",
+imposters:1,
+related:false,
+chaos:false,
+roles:false,
+blind:false,
+description:"The original. One hidden Imposter and one secret subject."
+},
+
+hard:{
+name:"Hard Mode",
+imposters:1,
+related:true,
+chaos:false,
+roles:false,
+blind:false,
+description:"The Imposter receives a related subject instead of the real one."
+},
+
+chaos:{
+name:"Chaos",
+imposters:1,
+related:false,
+chaos:true,
+roles:false,
+blind:false,
+description:"One Imposter plus unpredictable clue challenges."
+},
+
+double:{
+name:"Double Imposter",
+imposters:2,
+related:false,
+chaos:false,
+roles:false,
+blind:false,
+description:"Two Imposters. They do not know who the other Imposter is."
+},
+
+secret:{
+name:"Secret Roles",
+imposters:1,
+related:false,
+chaos:false,
+roles:true,
+blind:false,
+description:"Crew members can receive secret powers."
+},
+
+blind:{
+name:"Blind",
+imposters:1,
+related:false,
+chaos:false,
+roles:false,
+blind:true,
+description:"Subjects are broad and harder to pin down."
+},
+
+nightmare:{
+name:"Nightmare",
+imposters:2,
+related:true,
+chaos:true,
+roles:true,
+blind:false,
+description:"Two Imposters, related subjects, Chaos and secret roles."
+},
+
+custom:{
+name:"Custom",
+imposters:1,
+related:false,
+chaos:false,
+roles:false,
+blind:false,
+custom:true,
+description:"Build your own rule set."
+}
+
+};
+
+
+/* =========================================================
+   GAME STATE
+   ========================================================= */
+
+let GAME = {
+
+mode:"classic",
+
+settings:{
+imposters:1,
+related:false,
+chaos:false,
+roles:false,
+blind:false
+},
+
+players:[],
+
+subject:"",
+relatedSubject:"",
+category:"",
+
+alive:[],
+
+roles:{},
+
+clues:{},
+
+votes:{},
+
+protectedPlayer:null,
+
+chaosEvent:null,
+
+subjectRound:1,
+
+clueCycle:1,
+
+revealIndex:0,
+
+clueIndex:0,
+
+voteIndex:0,
+
+selectedVote:null,
+
+pendingElimination:null,
+
+powerQueue:[],
+
+powerIndex:0,
+
+winner:null
+
+};
+
+
+let CUSTOM = {
+
+related:false,
+chaos:false,
+roles:false
+
+};
+
+
+/* =========================================================
+   BASIC HELPERS
+   ========================================================= */
+
+function $(id){
+return document.getElementById(id);
+}
+
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(screen=>screen.classList.remove("active"));
+
+$(id).classList.add("active");
+
+if(id==="home"){
+$("topBadge").textContent="READY";
+}
+else{
+$("topBadge").textContent=
+(MODES[GAME.mode]?.name||"GAME").toUpperCase();
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+function shuffle(array){
+
+return [...array].sort(
+()=>Math.random()-.5
+);
+
+}
+
+
+function randomItem(array){
+
+return array[
+Math.floor(Math.random()*array.length)
+];
+
+}
+
+
+function normalise(value){
+
+return String(value)
+.trim()
+.toLowerCase()
+.replace(/[^a-z0-9]+/g," ");
+
+}
+
+
+function escapeHTML(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+function getPlayer(id){
+
+return GAME.players.find(
+player=>player.id===id
+);
+
+}
+
+
+function livingPlayers(){
+
+return GAME.players.filter(
+player=>GAME.alive.includes(player.id)
+);
+
+}
+
+
+function livingImposters(){
+
+return livingPlayers().filter(
+player=>player.role==="Imposter"
+);
+
+}
+
+
+function livingCrew(){
+
+return livingPlayers().filter(
+player=>player.role==="Crew"
+);
+
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+function getStats(){
+
+return JSON.parse(
+localStorage.getItem("imposterStats") ||
+'{"games":0,"crew":0,"imposters":0}'
+);
+
+}
+
+
+function saveStats(winner){
+
+let stats=getStats();
+
+stats.games++;
+
+if(winner==="CREW"){
+stats.crew++;
+}
+else{
+stats.imposters++;
+}
+
+localStorage.setItem(
+"imposterStats",
+JSON.stringify(stats)
+);
+
+renderStats();
+
+}
+
+
+function renderStats(){
+
+let stats=getStats();
+
+$("gamesStat").textContent=stats.games;
+$("crewStat").textContent=stats.crew;
+$("impStat").textContent=stats.imposters;
+
+}
+
+
+/* =========================================================
+   MODE SELECTION
+   ========================================================= */
+
+function renderModes(){
+
+$("modeGrid").innerHTML="";
+
+Object.entries(MODES).forEach(
+([key,mode])=>{
+
+let button=document.createElement("button");
+
+button.className="mode";
+
+button.innerHTML=`
+
+<span class="pill">
+${mode.imposters}
+IMPOSTER${mode.imposters>1?"S":""}
+${mode.custom?" • BUILD IT":""}
+</span>
+
+<h3>
+${mode.name}
+</h3>
+
+<p>
+${mode.description}
+</p>
+
+`;
+
+button.onclick=()=>chooseMode(key);
+
+$("modeGrid").appendChild(button);
+
+});
+
+}
+
+
+function chooseMode(key){
+
+GAME.mode=key;
+
+let mode=MODES[key];
+
+$("setupModeName").textContent=
+mode.name.toUpperCase();
+
+$("customRules").style.display=
+mode.custom?"block":"none";
+
+if(!mode.custom){
+
+CUSTOM={
+related:false,
+chaos:false,
+roles:false
+};
+
+}
+
+updateCustomButtons();
+
+renderPlayers();
+
+showScreen("setup");
+
+}
+
+
+/* =========================================================
+   PLAYER SETUP
+   ========================================================= */
+
+function renderPlayers(){
+
+let count=Math.max(
+3,
+Math.min(
+12,
+parseInt($("playerCount").value)||6
+)
+);
+
+$("playerCount").value=count;
+
+let existing=[
+...$("playerList").querySelectorAll("input")
+].map(input=>input.value);
+
+$("playerList").innerHTML="";
+
+for(let i=0;i<count;i++){
+
+let row=document.createElement("div");
+
+row.className="player-row";
+
+row.innerHTML=`
+
+<div class="player-number">
+${i+1}
+</div>
+
+<input
+id="player${i}"
+type="text"
+maxlength="22"
+placeholder="Player ${i+1}"
+value="${escapeHTML(existing[i]||"Player "+(i+1))}"
+>
+
+`;
+
+$("playerList").appendChild(row);
+
+}
+
+}
+
+
+function toggleCustom(name){
+
+CUSTOM[name]=!CUSTOM[name];
+
+updateCustomButtons();
+
+}
+
+
+function updateCustomButtons(){
+
+$("relatedToggle")
+.classList.toggle("on",CUSTOM.related);
+
+$("chaosToggle")
+.classList.toggle("on",CUSTOM.chaos);
+
+$("rolesToggle")
+.classList.toggle("on",CUSTOM.roles);
+
+}
+
+
+/* =========================================================
+   START GAME
+   ========================================================= */
+
+function startGame(){
+
+let mode=MODES[GAME.mode];
+
+let impCount=mode.custom
+?Math.max(
+1,
+Math.min(
+3,
+parseInt($("customImposters").value)||1
+)
+)
+:mode.imposters;
+
+let playerCount=
+parseInt($("playerCount").value)||6;
+
+if(playerCount<impCount+2){
+
+$("setupWarning").style.display="block";
+
+$("setupWarning").textContent=
+`You need at least ${impCount+2} players for ${impCount} Imposter${impCount>1?"s":""}.`;
+
+return;
+
+}
+
+let names=[];
+
+for(let i=0;i<playerCount;i++){
+
+let name=
+$("player"+i).value.trim()
+||"Player "+(i+1);
+
+if(
+names
+.map(normalise)
+.includes(normalise(name))
+){
+
+$("setupWarning").style.display="block";
+
+$("setupWarning").textContent=
+"Every player needs a different name.";
+
+return;
+
+}
+
+names.push(name);
+
+}
+
+$("setupWarning").style.display="none";
+
+
+GAME.settings={
+
+imposters:impCount,
+
+related:mode.custom
+?CUSTOM.related
+:mode.related,
+
+chaos:mode.custom
+?CUSTOM.chaos
+:mode.chaos,
+
+roles:mode.custom
+?CUSTOM.roles
+:mode.roles,
+
+blind:mode.blind
+
+};
+
+
+GAME.players=names.map(
+(name,id)=>({
+
+id,
+name,
+role:"Crew",
+special:null,
+powerUsed:false
+
+})
+);
+
+
+GAME.subjectRound=1;
+GAME.clueCycle=1;
+
+createSubjectRound();
+
+}
+
+
+/* =========================================================
+   CREATE NEW SUBJECT ROUND
+   ========================================================= */
+
+function createSubjectRound(){
+
+GAME.alive=
+GAME.players.map(player=>player.id);
+
+GAME.clues={};
+GAME.votes={};
+
+GAME.protectedPlayer=null;
+
+GAME.pendingElimination=null;
+
+GAME.winner=null;
+
+GAME.revealIndex=0;
+GAME.clueIndex=0;
+GAME.voteIndex=0;
+
+GAME.players.forEach(player=>{
+
+player.role="Crew";
+player.special=null;
+player.powerUsed=false;
+
+});
+
+
+/* SUBJECT */
+
+let categories=Object.keys(SUBJECTS);
+
+GAME.category=randomItem(categories);
+
+GAME.subject=
+randomItem(
+SUBJECTS[GAME.category]
+);
+
+
+/* RELATED SUBJECT */
+
+let directRelated=
+RELATED[GAME.subject];
+
+if(directRelated){
+
+GAME.relatedSubject=directRelated;
+
+}
+else{
+
+let choices=
+SUBJECTS[GAME.category]
+.filter(subject=>subject!==GAME.subject);
+
+GAME.relatedSubject=
+randomItem(choices);
+
+}
+
+
+/* IMPOSTERS */
+
+let shuffledIDs=
+shuffle(
+GAME.players.map(player=>player.id)
+);
+
+let impIDs=
+shuffledIDs.slice(
+0,
+GAME.settings.imposters
+);
+
+impIDs.forEach(id=>{
+
+getPlayer(id).role="Imposter";
+
+});
+
+
+/* SPECIAL ROLES */
+
+if(GAME.settings.roles){
+
+let crewPool=
+shuffle(
+GAME.players.filter(
+player=>player.role==="Crew"
+)
+);
+
+let roleNames=
+Object.keys(SPECIAL_ROLES);
+
+let amount=
+Math.min(
+roleNames.length,
+crewPool.length
+);
+
+for(let i=0;i<amount;i++){
+
+crewPool[i].special=
+roleNames[i];
+
+}
+
+}
+
+beginReveal();
+
+}
+
+
+/* =========================================================
+   ROLE REVEAL
+   ========================================================= */
+
+function beginReveal(){
+
+GAME.revealIndex=0;
+
+showPassScreen();
+
+}
+
+
+function showPassScreen(){
+
+let player=
+GAME.players[GAME.revealIndex];
+
+$("passPlayer").textContent=
+player.name;
+
+showScreen("pass");
+
+}
+
+
+function revealRole(){
+
+let player=
+GAME.players[GAME.revealIndex];
+
+$("roleSecret").textContent=
+player.name.toUpperCase()+" • SECRET";
+
+
+if(player.role==="Imposter"){
+
+$("roleTitle").textContent=
+"IMPOSTER";
+
+$("roleTitle").className=
+"role imposter";
+
+
+if(GAME.settings.related){
+
+$("roleInformation").innerHTML=`
+
+<div class="small">
+YOUR RELATED SUBJECT
+</div>
+
+<div class="subject">
+${escapeHTML(GAME.relatedSubject)}
+</div>
+
+`;
+
+$("roleDescription").innerHTML=`
+
+You do not know the real subject.<br><br>
+
+Your shown subject is related to the real one.
+Blend in without revealing that you are guessing.
+
+`;
+
+}
+else{
+
+$("roleInformation").innerHTML=`
+
+<div class="small">
+YOUR SUBJECT
+</div>
+
+<div class="subject">
+UNKNOWN
+</div>
+
+`;
+
+$("roleDescription").textContent=
+"You do NOT know the secret subject. Listen carefully and try to blend in.";
+
+}
+
+}
+else{
+
+$("roleTitle").textContent=
+"Crew";
+
+$("roleTitle").className=
+"role crew";
+
+
+$("roleInformation").innerHTML=`
+
+<div class="small">
+SECRET SUBJECT
+</div>
+
+<div class="subject">
+${escapeHTML(GAME.subject)}
+</div>
+
+`;
+
+
+if(player.special){
+
+$("roleDescription").innerHTML=`
+
+<b>${escapeHTML(player.special)}</b><br><br>
+
+${escapeHTML(
+SPECIAL_ROLES[player.special].description
+)}
+
+`;
+
+}
+else{
+
+$("roleDescription").textContent=
+"You are Crew. Give a useful clue without making the subject too obvious.";
+
+}
+
+}
+
+showScreen("role");
+
+}
+
+
+function hideRole(){
+
+GAME.revealIndex++;
+
+if(
+GAME.revealIndex<
+GAME.players.length
+){
+
+showPassScreen();
+
+}
+else{
+
+beginClueCycle();
+
+}
+
+}
+
+
+/* =========================================================
+   CLUE CYCLE
+   ========================================================= */
+
+function beginClueCycle(){
+
+GAME.clues={};
+GAME.clueIndex=0;
+
+GAME.chaosEvent=
+GAME.settings.chaos
+?randomItem(CHAOS_EVENTS)
+:null;
+
+renderClueTurn();
+
+}
+
+
+function renderClueTurn(){
+
+let players=
+livingPlayers();
+
+if(
+GAME.clueIndex>=players.length
+){
+
+beginPowerPhase();
+
+return;
+
+}
+
+let player=
+players[GAME.clueIndex];
+
+
+$("clueStep").textContent=
+`CLUE CYCLE ${GAME.clueCycle} • ${GAME.clueIndex+1}/${players.length}`;
+
+$("cluePlayer").textContent=
+player.name;
+
+$("clueInput").value="";
+
+
+if(GAME.chaosEvent){
+
+$("chaosBox").style.display="block";
+
+$("chaosBox").innerHTML=`
+
+<b>
+CHAOS EVENT: ${GAME.chaosEvent.name}
+</b>
+
+<br>
+
+${GAME.chaosEvent.description}
+
+`;
+
+}
+else{
+
+$("chaosBox").style.display="none";
+
+}
+
+
+$("clueInstruction").textContent=
+player.role==="Imposter"
+?"Give a believable clue. Do not make it obvious that you don't know the subject."
+:"Give one clue pointing toward the subject without saying the subject.";
+
+
+$("clueProgress").style.width=
+(
+GAME.clueIndex/players.length*100
+)+"%";
+
+
+showScreen("clues");
+
+setTimeout(
+()=>$("clueInput").focus(),
+120
+);
+
+}
+
+
+function submitClue(){
+
+let players=
+livingPlayers();
+
+let player=
+players[GAME.clueIndex];
+
+let clue=
+$("clueInput").value.trim();
+
+if(!clue){
+
+$("clueInput").focus();
+
+return;
+
+}
+
+
+if(
+GAME.chaosEvent &&
+!GAME.chaosEvent.check(clue)
+){
+
+alert(
+"This Chaos event requires exactly ONE word."
+);
+
+return;
+
+}
+
+
+GAME.clues[player.id]=clue;
+
+GAME.clueIndex++;
+
+renderClueTurn();
+
+}
+
+
+/* =========================================================
+   SECRET ROLE POWER PHASE
+   ========================================================= */
+
+function beginPowerPhase(){
+
+GAME.powerQueue=
+GAME.settings.roles
+?GAME.players.filter(
+player=>
+player.special &&
+GAME.alive.includes(player.id)
+)
+:null;
+
+GAME.powerIndex=0;
+
+if(
+!GAME.powerQueue ||
+GAME.powerQueue.length===0
+){
+
+beginDiscussion();
+
+return;
+
+}
+
+renderPower();
+
+}
+
+
+function renderPower(){
+
+if(
+GAME.powerIndex>=GAME.powerQueue.length
+){
+
+beginDiscussion();
+
+return;
+
+}
+
+let player=
+GAME.powerQueue[GAME.powerIndex];
+
+$("powerTitle").textContent=
+player.name+" • "+player.special;
+
+$("powerDescription").textContent=
+SPECIAL_ROLES[player.special].description;
+
+$("powerContinue").style.display=
+"block";
+
+
+let targets=
+livingPlayers().filter(
+target=>target.id!==player.id
+);
+
+
+if(player.powerUsed){
+
+$("powerContent").innerHTML=`
+
+<div class="notice">
+Your power has already been used this subject round.
+</div>
+
+`;
+
+return;
+
+}
+
+
+/* DETECTIVE */
+
+if(player.special==="Detective"){
+
+$("powerContinue").style.display="none";
+
+$("powerContent").innerHTML=`
+
+<div class="choice-grid">
+
+${targets.map(target=>`
+
+<button
+class="choice"
+onclick="useDetective(${target.id})">
+
+${escapeHTML(target.name)}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+
+/* BODYGUARD */
+
+else if(player.special==="Bodyguard"){
+
+$("powerContinue").style.display="none";
+
+$("powerContent").innerHTML=`
+
+<div class="choice-grid">
+
+${targets.map(target=>`
+
+<button
+class="choice"
+onclick="useBodyguard(${target.id})">
+
+${escapeHTML(target.name)}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+
+/* COPYCAT */
+
+else if(player.special==="Copycat"){
+
+$("powerContinue").style.display="none";
+
+$("powerContent").innerHTML=`
+
+<div class="choice-grid">
+
+${targets.map(target=>`
+
+<button
+class="choice"
+onclick="useCopycat(${target.id})">
+
+Swap clues with ${escapeHTML(target.name)}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+
+/* TRICKSTER */
+
+else if(player.special==="Trickster"){
+
+$("powerContent").innerHTML=`
+
+<div class="notice">
+
+Your power activates during your voting turn.
+You can choose to make your vote count twice.
+
+</div>
+
+`;
+
+}
+
+showScreen("powers");
+
+}
+
+
+/* DETECTIVE */
+
+function useDetective(targetID){
+
+let player=
+GAME.powerQueue[GAME.powerIndex];
+
+let target=
+getPlayer(targetID);
+
+alert(
+`${target.name}: ${target.role.toUpperCase()}`
+);
+
+player.powerUsed=true;
+
+GAME.powerIndex++;
+
+renderPower();
+
+}
+
+
+/* BODYGUARD */
+
+function useBodyguard(targetID){
+
+let player=
+GAME.powerQueue[GAME.powerIndex];
+
+GAME.protectedPlayer=targetID;
+
+player.powerUsed=true;
+
+GAME.powerIndex++;
+
+renderPower();
+
+}
+
+
+/* COPYCAT */
+
+function useCopycat(targetID){
+
+let player=
+GAME.powerQueue[GAME.powerIndex];
+
+let target=
+getPlayer(targetID);
+
+let first=
+GAME.clues[player.id]||"";
+
+let second=
+GAME.clues[target.id]||"";
+
+GAME.clues[player.id]=second;
+GAME.clues[target.id]=first;
+
+player.powerUsed=true;
+
+GAME.powerIndex++;
+
+renderPower();
+
+}
+
+
+/* POWER COMPLETE */
+
+function finishPower(){
+
+GAME.powerIndex++;
+
+renderPower();
+
+}
+
+
+/* =========================================================
+   DISCUSSION
+   ========================================================= */
+
+function beginDiscussion(){
+
+$("discussionInfo").textContent=
+`Subject round ${GAME.subjectRound}, clue cycle ${GAME.clueCycle}. Discuss who sounds suspicious.`;
+
+$("discussionClues").innerHTML=
+livingPlayers()
+.map(player=>`
+
+<div class="clue-card">
+
+<div class="clue-name">
+${escapeHTML(player.name)}
+</div>
+
+<div class="clue-text">
+${escapeHTML(
+GAME.clues[player.id]||"No clue"
+)}
+</div>
+
+</div>
+
+`)
+.join("");
+
+showScreen("discussion");
+
+}
+
+
+/* =========================================================
+   VOTING
+   ========================================================= */
+
+function startVoting(){
+
+GAME.votes={};
+GAME.voteIndex=0;
+GAME.selectedVote=null;
+
+renderVote();
+
+}
+
+
+function renderVote(){
+
+let players=
+livingPlayers();
+
+if(
+GAME.voteIndex>=players.length
+){
+
+showTally();
+
+return;
+
+}
+
+let voter=
+players[GAME.voteIndex];
+
+$("voteTitle").textContent=
+`${voter.name}'s vote`;
+
+$("voteOptions").innerHTML="";
+
+let targets=
+players.filter(
+player=>player.id!==voter.id
+);
+
+targets.forEach(target=>{
+
+let button=
+document.createElement("button");
+
+button.className="vote-option";
+
+button.textContent=
+target.name;
+
+button.onclick=()=>selectVote(target.id);
+
+$("voteOptions").appendChild(button);
+
+});
+
+
+if(
+voter.special==="Trickster" &&
+!voter.powerUsed
+){
+
+$("tricksterNotice").style.display="block";
+
+$("tricksterNotice").innerHTML=
+"<b>TRICKSTER:</b> After selecting your target, you may use your double vote.";
+
+}
+else{
+
+$("tricksterNotice").style.display="none";
+
+}
+
+showScreen("vote");
+
+}
+
+
+function selectVote(targetID){
+
+GAME.selectedVote=targetID;
+
+document
+.querySelectorAll(".vote-option")
+.forEach(button=>{
+
+button.classList.toggle(
+"selected",
+button.textContent===getPlayer(targetID).name
+);
+
+});
+
+}
+
+
+/* =========================================================
+   LOCK VOTE
+   ========================================================= */
+
+function lockVote(){
+
+if(
+GAME.selectedVote===null
+){
+
+alert("Choose a player first.");
+
+return;
+
+}
+
+let players=
+livingPlayers();
+
+let voter=
+players[GAME.voteIndex];
+
+let amount=1;
+
+
+/* TRICKSTER */
+
+if(
+voter.special==="Trickster" &&
+!voter.powerUsed
+){
+
+let useDouble=
+confirm(
+"Use your Trickster double vote?"
+);
+
+if(useDouble){
+
+amount=2;
+
+voter.powerUsed=true;
+
+}
+
+}
+
+
+if(
+!GAME.votes[GAME.selectedVote]
+){
+
+GAME.votes[GAME.selectedVote]=0;
+
+}
+
+GAME.votes[GAME.selectedVote]+=amount;
+
+GAME.voteIndex++;
+
+GAME.selectedVote=null;
+
+if(
+GAME.voteIndex<players.length
+){
+
+renderVote();
+
+}
+else{
+
+showTally();
+
+}
+
+}
+
+
+/* =========================================================
+   TALLY
+   ========================================================= */
+
+function showTally(){
+
+let entries=
+Object.entries(GAME.votes)
+.map(
+([id,votes])=>({
+
+player:getPlayer(Number(id)),
+votes
+
+})
+)
+.sort(
+(a,b)=>b.votes-a.votes
+);
+
+
+$("tallyContent").innerHTML=
+entries
+.map(entry=>`
+
+<div class="vote-count">
+
+<div>
+<b>
+${escapeHTML(entry.player.name)}
+</b>
+</div>
+
+<span>
+${entry.votes}
+vote${entry.votes===1?"":"s"}
+</span>
+
+</div>
+
+`)
+.join("");
+
+showScreen("tally");
+
+}
+
+
+/* =========================================================
+   RESOLVE VOTE
+   ========================================================= */
+
+function resolveVote(){
+
+let entries=
+Object.entries(GAME.votes)
+.map(
+([id,votes])=>({
+
+id:Number(id),
+votes
+
+})
+)
+.sort(
+(a,b)=>b.votes-a.votes
+);
+
+
+if(!entries.length){
+
+newClueCycle();
+
+return;
+
+}
+
+
+let highest=
+entries[0].votes;
+
+let tied=
+entries.filter(
+entry=>entry.votes===highest
+);
+
+
+/* TIE */
+
+if(tied.length>1){
+
+$("tieMessage").textContent=
+`${tied.map(
+entry=>getPlayer(entry.id).name
+).join(", ")} tied with ${highest} vote${highest===1?"":"s"}. Nobody is eliminated.`;
+
+showScreen("tie");
+
+return;
+
+}
+
+
+let target=
+getPlayer(entries[0].id);
+
+
+/* BODYGUARD */
+
+if(
+GAME.protectedPlayer===target.id
+){
+
+GAME.protectedPlayer=null;
+
+$("tieMessage").textContent=
+`${target.name} was protected by the Bodyguard. Nobody is eliminated this cycle.`;
+
+showScreen("tie");
+
+return;
+
+}
+
+
+eliminatePlayer(target);
+
+}
+
+
+/* =========================================================
+   ELIMINATION
+   ========================================================= */
+
+function eliminatePlayer(player){
+
+GAME.alive=
+GAME.alive.filter(
+id=>id!==player.id
+);
+
+GAME.pendingElimination=
+player.id;
+
+$("eliminatedName").textContent=
+player.name;
+
+$("eliminatedRole").textContent=
+player.role.toUpperCase();
+
+$("eliminatedName").className=
+"role "+
+(
+player.role==="Imposter"
+?"imposter"
+:"crew"
+);
+
+if(player.role==="Imposter"){
+
+$("eliminatedMessage").textContent=
+"The group found an Imposter.";
+
+$("eliminationContinue").textContent=
+"CONTINUE TO FINAL GUESS";
+
+}
+else{
+
+$("eliminatedMessage").textContent=
+"The group eliminated a Crew member.";
+
+$("eliminationContinue").textContent=
+"CONTINUE";
+
+}
+
+showScreen("elimination");
+
+}
+
+
+/* =========================================================
+   AFTER ELIMINATION
+   ========================================================= */
+
+function continueAfterElimination(){
+
+let player=
+getPlayer(GAME.pendingElimination);
+
+if(
+player.role==="Imposter"
+){
+
+$("guessTitle").textContent=
+`${player.name}, make your final guess`;
+
+$("guessInput").value="";
+
+showScreen("guess");
+
+return;
+
+}
+
+checkWinConditions();
+
+}
+
+
+/* =========================================================
+   FINAL GUESS
+   ========================================================= */
+
+function submitFinalGuess(){
+
+let player=
+getPlayer(GAME.pendingElimination);
+
+let guess=
+normalise(
+$("guessInput").value
+);
+
+let answer=
+normalise(
+GAME.subject
+);
+
+
+if(
+guess===answer
+){
+
+finishGame(
+"IMPOSTERS",
+`${player.name} correctly guessed the secret subject.`
+);
+
+return;
+
+}
+
+
+alert(
+"Wrong guess."
+);
+
+checkWinConditions();
+
+}
+
+
+/* =========================================================
+   WIN CONDITIONS
+   ========================================================= */
+
+function checkWinConditions(){
+
+let impCount=
+livingImposters().length;
+
+let crewCount=
+livingCrew().length;
+
+
+/* CREW HAS ELIMINATED EVERY IMPOSTER */
+
+if(impCount===0){
+
+finishGame(
+"CREW",
+"Every Imposter has been eliminated."
+);
+
+return;
+
+}
+
+
+/* IMPOSTERS HAVE PARITY */
+
+if(
+impCount>=crewCount
+){
+
+finishGame(
+"IMPOSTERS",
+"The living Imposters reached parity with Crew."
+);
+
+return;
+
+}
+
+
+/* GAME CONTINUES */
+
+newClueCycle();
+
+}
+
+
+/* =========================================================
+   NEW CLUE CYCLE
+   ========================================================= */
+
+function newClueCycle(){
+
+GAME.clueCycle++;
+
+GAME.clues={};
+GAME.votes={};
+
+GAME.protectedPlayer=null;
+
+GAME.pendingElimination=null;
+
+beginClueCycle();
+
+}
+
+
+/* =========================================================
+   NEW SUBJECT ROUND
+   ========================================================= */
+
+function newSubjectRound(){
+
+GAME.subjectRound++;
+
+GAME.clueCycle=1;
+
+createSubjectRound();
+
+}
+
+
+/* =========================================================
+   END GAME
+   ========================================================= */
+
+function finishGame(winner,reason){
+
+GAME.winner=winner;
+
+saveStats(winner);
+
+$("resultTitle").textContent=
+winner==="CREW"
+?"CREW WINS"
+:"IMPOSTERS WIN";
+
+$("resultTitle").className=
+"role "+
+(
+winner==="CREW"
+?"crew"
+:"imposter"
+);
+
+$("resultReason").textContent=
+reason;
+
+$("resultSubject").innerHTML=`
+
+<b>
+SECRET SUBJECT
+</b>
+
+<br><br>
+
+<div class="subject">
+${escapeHTML(GAME.subject)}
+</div>
+
+<br>
+
+<span class="small">
+Category: ${escapeHTML(GAME.category)}
+</span>
+
+`;
+
+showScreen("result");
+
+}
+
+
+/* =========================================================
+   COPY GAME LINK
+   ========================================================= */
+
+async function copyGameLink(){
+
+let link=
+location.href.split("#")[0]+"#play";
+
+try{
+
+await navigator.clipboard.writeText(link);
+
+alert(
+"Game link copied! Share it with your friends."
+);
+
+}
+catch(error){
+
+prompt(
+"Copy this game link:",
+link
+);
+
+}
+
+}
+
+
+/* =========================================================
+   KEYBOARD SUPPORT
+   ========================================================= */
+
+$("clueInput").addEventListener(
+"keydown",
+event=>{
+
+if(
+event.key==="Enter"
+){
+
+event.preventDefault();
+
+submitClue();
+
+}
+
+}
+);
+
+
+$("guessInput").addEventListener(
+"keydown",
+event=>{
+
+if(
+event.key==="Enter"
+){
+
+event.preventDefault();
+
+submitFinalGuess();
+
+}
+
+}
+);
+
+
+/* =========================================================
+   STARTUP
+   ========================================================= */
+
+renderModes();
+
+renderPlayers();
+
+renderStats();
+
+</script>
+
+</body>
+</html>
